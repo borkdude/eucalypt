@@ -597,7 +597,8 @@
           (not (vector? hiccup-b-realized))
           (not= (first hiccup-a-realized)
                 (first hiccup-b-realized)))
-      (let [parent (.-parentNode dom-a)
+      (let [_ (js/console.log "parentNode")
+            parent (.-parentNode dom-a)
             parent-ns (dom->namespace parent)
             new-node (hiccup->dom hiccup-b-realized parent-ns)]
         (log "patch: replacing node. dom-a:" (str dom-a)
