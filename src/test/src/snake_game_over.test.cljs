@@ -1,6 +1,5 @@
 (ns snake-game-over.test
   (:require ["vitest" :refer [describe it]]
-            ["es-toolkit" :refer [isEqual]]
             [eucalypt :as r]
             [helpers :as th]))
 
@@ -32,18 +31,18 @@
              (let [[hx hy] (first snake)
                    [dx dy] dir
                    new-head [(+ hx dx) (+ hy dy)]
-                   ate? (isEqual new-head food)
+                   ate? (= new-head food)
                    new-snake (vec (cons new-head (if ate? snake (butlast snake))))
                    [nx ny] new-head
                    hit-wall? (or (< nx 0) (>= nx size) (< ny 0) (>= ny size))
-                   hit-self? (some #(isEqual new-head %) (rest new-snake))]
+                   hit-self? (some #(= new-head %) (rest new-snake))]
                (cond
                  hit-wall? (assoc st :alive? false)
                  hit-self? (assoc st :alive? false)
                  ate? (assoc st :snake new-snake :food (random-food))
                  :else (assoc st :snake new-snake)))))))
 
-(defonce snake-interval (js/setInterval move-snake 200))
+(defonce snake-interval (js/setInterval move-snake 20))
 
 (defonce keydown-listener
   (.addEventListener js/window "keydown"
@@ -52,10 +51,10 @@
                          (swap! snake-state update :dir
                                 (fn [dir]
                                   (case key
-                                    "ArrowUp" (if (isEqual dir [0 1]) dir [0 -1])
-                                    "ArrowDown" (if (isEqual dir [0 -1]) dir [0 1])
-                                    "ArrowLeft" (if (isEqual dir [1 0]) dir [-1 0])
-                                    "ArrowRight" (if (isEqual dir [-1 0]) dir [1 0])
+                                    "ArrowUp" (if (= dir [0 1]) dir [0 -1])
+                                    "ArrowDown" (if (= dir [0 -1]) dir [0 1])
+                                    "ArrowLeft" (if (= dir [1 0]) dir [-1 0])
+                                    "ArrowRight" (if (= dir [-1 0]) dir [1 0])
                                     dir)))))))
 
 (defn cell-rect [[x y] color]
@@ -90,7 +89,7 @@
         (reset-snake-state)
         (let [initial-child-count (atom nil)]
           (r/render [game-board] container)
-          (-> (sleep 10)
+          (-> (sleep 1)
               (.then (fn []
                        (let [svg (.querySelector container "svg")]
                          (th/assert-not-nil svg)
@@ -98,13 +97,13 @@
                            (reset! initial-child-count child-count))
                          (th/assert-equal (:alive? @snake-state) true)
                          (th/assert-equal (.-textContent svg) ""))))
-              (.then (fn [] (sleep 10)))
+              (.then (fn [] (sleep 1)))
               (.then (fn []
                        (let [svg (.querySelector container "svg")]
                          (th/assert-not-nil svg)
                          (th/assert-equal (:alive? @snake-state) true)
                          (th/assert-equal (.-textContent svg) ""))))
-              (.then (fn [] (sleep 3500)))
+              (.then (fn [] (sleep 350)))
               (.then (fn []
                        (let [svg (.querySelector container "svg")]
                          (th/assert-not-nil svg)

@@ -1,10 +1,10 @@
 (ns games
   (:require
-    [eucalypt :as r]
-    ["es-toolkit" :refer [isEqual]]))
+    [eucalypt :as r]))
 
 (def app-state (r/atom {:page :home}))
 
+#_:clj-kondo/ignore
 (defn- rand
   "Return a random double in [0.0, n) if n given, else [0.0,1)."
   ([] (js/Math.random))
@@ -82,13 +82,13 @@
              st
              (let [head (vec [(+ (nth (first snake) 0) (nth dir 0))
                               (+ (nth (first snake) 1) (nth dir 1))])
-                   ate? (isEqual head food)
+                   ate? (= head food)
                    new-snake (vec (cons head (if ate? snake (butlast snake))))
                    x (nth head 0)
                    y (nth head 1)
                    hit-wall? (or (< x 0) (< y 0)
                                  (>= x snake-size) (>= y snake-size))
-                   hit-self? (some #(isEqual head %) (rest new-snake))]
+                   hit-self? (some #(= head %) (rest new-snake))]
                (cond
                  hit-wall? (assoc st :alive? false)
                  hit-self? (assoc st :alive? false)
@@ -100,10 +100,10 @@
     (swap! snake-state update :dir
            (fn [dir]
              (case key
-               "ArrowUp"    (if (isEqual dir [0 1]) dir [0 -1])
-               "ArrowDown"  (if (isEqual dir [0 -1]) dir [0 1])
-               "ArrowLeft"  (if (isEqual dir [1 0]) dir [-1 0])
-               "ArrowRight" (if (isEqual dir [-1 0]) dir [1 0])
+               "ArrowUp"    (if (= dir [0 1]) dir [0 -1])
+               "ArrowDown"  (if (= dir [0 -1]) dir [0 1])
+               "ArrowLeft"  (if (= dir [1 0]) dir [-1 0])
+               "ArrowRight" (if (= dir [-1 0]) dir [1 0])
                dir)))))
 
 (defn snake-cell-rect [[x y] color]
