@@ -486,7 +486,7 @@
         (let [child-a (nth children-a i)
               child-b (nth children-b i)
               dom-node (nth @dom-nodes i)
-              new-dom-node (patch child-a child-b dom-node)]
+              new-dom-node (when dom-node (patch child-a child-b dom-node))]
           (when (not= dom-node new-dom-node)
             (swap! dom-nodes assoc i new-dom-node)))
         (recur (inc i))))
@@ -596,7 +596,7 @@
           (not (vector? hiccup-b-realized))
           (not= (first hiccup-a-realized)
                 (first hiccup-b-realized)))
-      (let [_ (js/console.log "parentNode")
+      (let [_ (js/console.log "parentNode" dom-a)
             parent (.-parentNode dom-a)
             parent-ns (dom->namespace parent)
             new-node (hiccup->dom hiccup-b-realized parent-ns)]
@@ -627,10 +627,11 @@
           dom-a))))
 
 (defn modify-dom [normalized-component]
-  (log "modify-dom called for component:" normalized-component)
+  (js/console.log "modify-dom called for component:" normalized-component)
   (remove-watchers-for-component normalized-component)
   (reset! positional-key-counter 0)
   (let [mounted-info (get @mounted-components normalized-component)
+        _ (js/console.log :mounted-info mounted-info)
         {:keys [hiccup dom container]} mounted-info
         ; parent-ns (dom->namespace container)
         new-hiccup-unrendered (with-watcher-bound
@@ -646,7 +647,7 @@
                 :dom dom
                 :container container}))
       (let [_ (reset! positional-key-counter 0)
-            new-dom (patch hiccup new-hiccup-rendered dom)]
+            new-dom (when dom (patch hiccup new-hiccup-rendered dom))]
         (log "modify-dom: new DOM" (str new-dom))
         (swap! mounted-components assoc normalized-component
                {:hiccup new-hiccup-rendered

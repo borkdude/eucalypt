@@ -1,6 +1,6 @@
 (ns repro
   (:require
-   ["https://cdn.jsdelivr.net/npm/eucalypt@0.0.10/+esm" :as r]))
+   [eucalypt :as r]))
 
 (def app-state (r/atom {:page :home}))
 
