@@ -132,8 +132,8 @@
                (let [existing (get-in state [:subscriptions token host-id])]
                  (if (= watcher (:watcher existing))
                    state
-                   (let [subs (or (:subscriptions state) {})
-                         token-map (or (get subs token) {})
+                   (let [subs (or (:subscriptions state) (js/Map.))
+                         token-map (or (get subs token) (js/Map.))
                          entry {:host host
                                 :host-id host-id
                                 :watchers-atom watchers-atom
@@ -251,10 +251,10 @@
             (let [key (watcher-entry-key watcher)]
               (swap! watchers-atom
                      (fn [state]
-                       (dissoc (or state {}) key))))))))
+                       (dissoc (or state (js/Map.)) key))))))))
       (swap! runtime
              (fn [state]
-               (let [subs (or (:subscriptions state) {})
+               (let [subs (or (:subscriptions state) (js/Map.))
                      tokens (or (:component-tokens state) {})
                      new-subs (dissoc subs token)
                      new-tokens (dissoc tokens normalized-component)]
@@ -755,7 +755,7 @@
                      (assoc :component-instances {})
                      (assoc :pending-watchers [])
                      (assoc :watcher-flush-scheduled? false)
-                     (assoc :subscriptions {})
+                     (assoc :subscriptions (js/Map.))
                      (assoc :component-tokens {})))))
       (swap! roots dissoc container-id)))
   (doseq [child (vec (aget container "childNodes"))]
@@ -876,7 +876,7 @@
                             :pending-watchers []
                             :watcher-flush-scheduled? false
                             :mounted-components {}
-                            :subscriptions {}
+                            :subscriptions (js/Map.)
                             :component-tokens {}})
         base-ns (dom->namespace container)
         render-state (create-render-state {:container container

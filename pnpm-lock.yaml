@@ -15,8 +15,8 @@ importers:
         specifier: 14.12.3
         version: 14.12.3
       squint-cljs:
-        specifier: 0.8.158
-        version: 0.8.158
+        specifier: link:../squint
+        version: link:../squint
       vite:
         specifier: 7.1.2
         version: 7.1.2(terser@5.44.0)
@@ -404,10 +404,6 @@ packages:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
     engines: {node: '>= 16'}
 
-  chokidar@4.0.3:
-    resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
-    engines: {node: '>= 14.16.0'}
-
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
@@ -564,10 +560,6 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  readdirp@4.1.2:
-    resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
-    engines: {node: '>= 14.18.0'}
-
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
@@ -604,10 +596,6 @@ packages:
 
   spawn-command@0.0.2:
     resolution: {integrity: sha512-zC8zGoGkmc8J9ndvml8Xksr1Amk9qBujgbF0JAIWO7kXr43w0h/0GJNM/Vustixu+YE8N/MTrQ7N31FvHUACxQ==}
-
-  squint-cljs@0.8.158:
-    resolution: {integrity: sha512-Pw0cfnShvHN7a4GgMZTaMF0Wk41iuHTBaM0DwLsu6GJGAuMhDIBf3LUvkOFqpS8dwYYoJqBzrxVTr0PcQ64Bww==}
-    hasBin: true
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -1060,10 +1048,6 @@ snapshots:
 
   check-error@2.1.1: {}
 
-  chokidar@4.0.3:
-    dependencies:
-      readdirp: 4.1.2
-
   cliui@8.0.1:
     dependencies:
       string-width: 4.2.3
@@ -1213,8 +1197,6 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  readdirp@4.1.2: {}
-
   require-directory@2.1.1: {}
 
   rollup@4.52.0:
@@ -1272,10 +1254,6 @@ snapshots:
     optional: true
 
   spawn-command@0.0.2: {}
-
-  squint-cljs@0.8.158:
-    dependencies:
-      chokidar: 4.0.3
 
   stackback@0.0.2: {}
 
